@@ -64,7 +64,6 @@ public class EmployeesController : ControllerBase
         //3. Replace Employee's Name and Department with the values from updateEmployeeDto
         employee.Name = updateEmployeeDto.Name;
         employee.Department = updateEmployeeDto.Department;
-        
         //4. return 204 No Content
         return NoContent();
     }
@@ -107,7 +106,6 @@ public class EmployeesController : ControllerBase
         }
 
         employees.Remove(employee);
-        
         return NoContent();
     }
 }
