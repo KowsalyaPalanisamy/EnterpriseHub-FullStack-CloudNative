@@ -99,7 +99,8 @@ public class EmployeeService : IEmployeeService
         return new Employee{
             Id = employee.Id,
             Name = employee.Name,
-            Department = employee.Department
+            Department = employee.Department,
+            Salary = employee.Salary
         };
     }
 }
