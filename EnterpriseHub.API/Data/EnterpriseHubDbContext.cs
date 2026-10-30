@@ -11,6 +11,7 @@ public class EnterpriseHubDbContext : DbContext
     }
 
     public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<Department> Departments => Set<Department>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,5 +27,11 @@ public class EnterpriseHubDbContext : DbContext
             entity.Property(e => e.Salary)
                     .HasPrecision(18,2);
         });
+
+        modelBuilder.Entity<Employee>()
+            .HasOne(e => e.DepartmentDetails)
+            .WithMany(d => d.Employees)
+            .HasForeignKey(e => e.DepartmentId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
