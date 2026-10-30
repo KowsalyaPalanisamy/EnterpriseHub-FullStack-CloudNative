@@ -21,6 +21,23 @@ namespace EnterpriseHub.API.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EnterpriseHub.API.Models.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("EnterpriseHub.API.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -33,6 +50,9 @@ namespace EnterpriseHub.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -43,7 +63,24 @@ namespace EnterpriseHub.API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Employees", (string)null);
+                });
+
+            modelBuilder.Entity("EnterpriseHub.API.Models.Employee", b =>
+                {
+                    b.HasOne("EnterpriseHub.API.Models.Department", "DepartmentDetails")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DepartmentDetails");
+                });
+
+            modelBuilder.Entity("EnterpriseHub.API.Models.Department", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }
